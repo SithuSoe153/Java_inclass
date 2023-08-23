@@ -154,7 +154,9 @@ public class MainActivity extends AppCompatActivity {
         //Start Here
 
         public void setDate(LocalDate date){
-            txtDateTime.setText(date.format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+        ZonedDateTime zdt = ZonedDateTime.now();
+
+            txtDateTime.setText(zdt.format(DateTimeFormatter.ofPattern("yyyy/MM/dd hh:mm")));
         }
 
 
