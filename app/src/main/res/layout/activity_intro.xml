@@ -133,7 +133,7 @@
             android:fontFamily="@font/inria_sans_bold"
             android:textSize="32sp"
             android:gravity="center"
-            android:text="Get Started"
+            android:text="Data Entry"
 
             android:textColor="#ffffff" />
 
@@ -164,12 +164,13 @@
 
 
         <TextView
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="@font/inria_sans_bold"
             android:textSize="32sp"
             android:gravity="center"
-            android:text="Quit"
+            android:text="Data List"
 
 
             android:textColor="#6C6868" />

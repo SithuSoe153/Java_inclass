@@ -1,23 +1,39 @@
 package com.uog.foodapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.transition.Fade;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
+//import android.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -32,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
     private MeowBottomNavigation bottomNavigation;
 
     TextView txtDateTime;
+    Button btn_Checkbox, btn_Read, btn_Save;
+    CheckBox cb_checkbox;
+    Toolbar tb_toolbar1;
 
 
     @Override
@@ -47,8 +66,107 @@ public class MainActivity extends AppCompatActivity {
         long[] pattern = {0,150};
 
 
-        txtDateTime = findViewById(R.id.txtDateTime);
+        tb_toolbar1 = findViewById(R.id.tb_toolbar1);
+        setSupportActionBar(tb_toolbar1);
 
+
+
+        txtDateTime = findViewById(R.id.txtDateTime);
+        btn_Checkbox = findViewById(R.id.btn_Checkbox);
+        cb_checkbox = findViewById(R.id.cb_checkbox);
+
+cb_checkbox.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+
+
+        if (cb_checkbox.isChecked()){
+            new AlertDialog.Builder(MainActivity.this).setTitle("Testing the checkbox").setMessage("Your Test CheckBox is Checked now!").show();
+        }else{
+            new AlertDialog.Builder(MainActivity.this).setTitle("Testing the checkbox").setMessage("Your Test CheckBox is not Checked!").show();
+        }
+
+    }
+});
+
+
+
+        btn_Save=findViewById(R.id.btn_Save);
+        btn_Save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Shared Preferences
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("username", "mg lay");
+                editor.commit();
+
+
+                try {
+                    FileOutputStream outputStream= openFileOutput("my.txt", Context.MODE_PRIVATE);
+                    PrintStream stream = new PrintStream(outputStream);
+                    stream.println("Hello World");
+                    stream.println("Hello Mom");
+
+                    stream.close();
+
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+
+
+
+        btn_Read=findViewById(R.id.btn_Read);
+        btn_Read.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+
+                String name = sharedPreferences.getString("username","");
+
+                Log.i("datasave", name);
+
+//                File Read
+                try {
+                    FileInputStream inputStream = openFileInput("my.txt");
+                    InputStreamReader streamReader = new InputStreamReader(inputStream);
+                    BufferedReader reader = new BufferedReader(streamReader);
+                    String line;
+
+
+                    while ((line = reader.readLine()) !=null){
+                            Log.i("MyName"  , line);
+                    }
+
+                    streamReader.close();
+
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+        });
+
+
+
+
+        btn_Checkbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (cb_checkbox.isChecked()){
+                    Log.i("cb","Cb is checked");
+                    new AlertDialog.Builder(MainActivity.this).setTitle("Testing the checkbox").setMessage("Your Test CheckBox is Checked now!").show();
+                }else{
+                    new AlertDialog.Builder(MainActivity.this).setTitle("Testing the checkbox").setMessage("Your Test CheckBox is not Checked!").show();
+                    Log.i("cb","Cb is not checked");
+
+                }
+            }
+        });
 
         Fade fade = new Fade();
         View decor = getWindow().getDecorView();
@@ -120,6 +238,36 @@ public class MainActivity extends AppCompatActivity {
 
 //        Start Here
 
+        Button btnShowDialog = findViewById(R.id.btnShowDialog);
+        btnShowDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+              new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("Hello")
+//                        .setMessage("How are you!")
+                        .setPositiveButton("Confirm", null)
+                        .setNegativeButton("No",null)
+                        .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+
+                            }
+                        })
+                      .show();
+            }
+        });
+
+
+
+
+
+
+
+
+
+//        Start Here
+
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,countries);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -153,7 +301,23 @@ public class MainActivity extends AppCompatActivity {
 
         //Start Here
 
-        public void setDate(LocalDate date){
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Log.i("toolbox",item.getTitle().toString());
+        if (item.getItemId() == R.id.tb_Exit){
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void setDate(LocalDate date){
         ZonedDateTime zdt = ZonedDateTime.now();
 
             txtDateTime.setText(zdt.format(DateTimeFormatter.ofPattern("yyyy/MM/dd hh:mm")));

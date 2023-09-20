@@ -16,6 +16,7 @@ import android.util.Pair;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -74,6 +75,15 @@ public class IntroActivity extends AppCompatActivity {
         from_right = AnimationUtils.loadAnimation(this,R.anim.from_right);
         btnQuit.setAnimation(from_right);
 
+        btnQuit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(IntroActivity.this, DataBaseListActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
 
 //        rectangle.animate().translationY(-1400).setDuration(2700).setStartDelay(0);
 
@@ -96,7 +106,7 @@ public class IntroActivity extends AppCompatActivity {
 
                 ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(IntroActivity.this,pair);
 
-                Intent intent = new Intent(IntroActivity.this, MainActivity.class);
+                Intent intent = new Intent(IntroActivity.this, DataBaseActivity.class);
 
             startActivity(intent,options.toBundle());
 
@@ -106,6 +116,7 @@ public class IntroActivity extends AppCompatActivity {
 //                overridePendingTransition(0,0);
 
             }
+
         });
 
 

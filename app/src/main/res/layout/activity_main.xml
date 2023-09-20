@@ -13,6 +13,15 @@
         android:layout_height="match_parent">
 
 
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tb_toolbar1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme" />
+
         <ImageView
             android:id="@+id/LogoBurger"
             android:layout_width="match_parent"
@@ -58,6 +67,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
 
+
+            android:layout_marginStart="100dp"
+            android:layout_marginEnd="100dp"
+
             />
 
 
@@ -78,8 +91,63 @@
 
 
 
+            />
+
+        <Button
+
+            android:id="@+id/btn_Save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="Save"
+
+            app:layout_constraintTop_toBottomOf="@+id/txtDateTime"
+
 
             />
+
+
+        <Button
+
+            android:id="@+id/btn_Read"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="Read"
+
+            app:layout_constraintTop_toBottomOf="@+id/btn_Save"
+
+
+            />
+
+
+        <CheckBox
+            android:id="@+id/cb_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Checkbox Test"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnShowDialog"
+
+            android:layout_margin="50dp"
+
+            />
+
+        <Button
+            android:id="@+id/btn_Checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="Button to CheckBox"
+
+            app:layout_constraintTop_toBottomOf="@+id/cb_checkbox"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            />
+
 
 
         <Button
@@ -95,6 +163,21 @@
 
             android:layout_marginTop="50dp"
 
+
+            />
+
+
+        <Button
+            android:id="@+id/btnShowDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Show Diaglog Box"
+
+            app:layout_constraintTop_toBottomOf="@+id/btnShowDateTime"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+
+            android:layout_marginTop="30dp"
 
             />
 
